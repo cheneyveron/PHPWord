@@ -13,13 +13,17 @@
 1. 选择一个路径放网站，如/data/wwwroot
     
        mkdir /data && cd /data
+       
        mkdir wwwroot && cd wwwroot 
     
 2. 进入/data/wwwroot，克隆本工程并设置权限
 
        cd /data/wwwroot
+       
        git clone https://github.com/cheneyveron/PHPWord.git
+       
        cd PHPWord
+       
        chmod -R 777 samples
 
 3. 本程序使用Composer管理依赖，所以接下来我们安装相关依赖。
@@ -27,8 +31,11 @@
     请先确保你已经安装好了php并设置好了环境变量，然后执行
 
        cd /data/wwwroot/PHPWord
+       
        chmod +x composer
+       
        php composer
+       
        php composer.phar install
 
     因为众所周知的原因，国内的服务器访问Composer较慢且不稳定。如果失败了就重试即可。
@@ -44,6 +51,7 @@
    当本程序更新时只需要进入/data/wwwroot/PHPWord执行
    
        git pull
+       
        chmod -R 777 samples
        
    即可。
