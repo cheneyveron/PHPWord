@@ -43,7 +43,7 @@
 
    当本程序更新时只需要进入/data/wwwroot/PHPWord执行
    
-       git pull -u origin master
+       git pull
        chmod -R 777 samples
        
    即可。
