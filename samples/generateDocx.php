@@ -1,4 +1,17 @@
 <?php
+session_start();
+
+function RandomString()
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randstring = '';
+    for ($i = 0; $i < 10; $i++) {
+        $randstring .= $characters[rand(0, strlen($characters))];
+    }
+    return $randstring;
+}
+$randstring = RandomString();
+$_SESSION['rand'] = $randstring;
 
 $uploaddir = './';
 $uploadfile = '';
@@ -16,7 +29,7 @@ if ((($_FILES["file"]["type"] == "image/gif")
     else
     {
 
-        $uploadfile = $uploaddir . 'head.jpg';
+        $uploadfile = $uploaddir . $_SESSION['rand'] .'.jpg';
 
         if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
         } else {
@@ -83,14 +96,14 @@ $templateProcessor->setValue('mm', $_POST["mm"]);
 $templateProcessor->setValue('dd', $_POST["dd"]);
 
 echo date('H:i:s'), ' 开始生成……', EOL;
-$templateProcessor->saveAs('results/generated.docx');
+$templateProcessor->saveAs('results/'.$_SESSION['rand'].'.docx');
 
 
 echo getEndingNotes(array('Word2007' => 'docx'));
 
-echo "<p><a href='./results/generated.docx'>点击此处下载</a></p>";
+echo "<p><a target='_blank' href='./results/{$_SESSION['rand']}.docx'>点击此处下载</a></p>";
 
-echo "<p>下载完毕后<a href='del.php'>点击此处</a>删除文档和头像</p>";
+echo "<p style='color: red;'>下载完毕后务必<a href='del.php'>点击此处</a>删除文档和头像</p>";
 
 if (!CLI) {
     include_once 'Sample_Footer.php';

@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  * Created by PhpStorm.
  * User: lvyedehai
@@ -23,7 +24,9 @@ function delete($info){
         echo "<p>文件{$info}不存在</p>";
     }
 }
-delete("./head.jpg");
-delete("./results/generated.docx");
+delete("./{$_SESSION['rand']}.jpg");
+delete("./results/{$_SESSION['rand']}.docx");
+unset($_SESSION['rand']);
+session_destroy();
 echo "<a href='/'>返回首页</a>";
 die();
