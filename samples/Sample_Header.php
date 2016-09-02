@@ -30,9 +30,8 @@ if (CLI) {
 
 // Set titles and names
 $pageHeading = str_replace('_', ' ', SCRIPT_FILENAME);
-$pageTitle = IS_INDEX ? 'Welcome to ' : "{$pageHeading} - ";
-$pageTitle .= 'PHPWord';
-$pageHeading = IS_INDEX ? '' : "<h1>{$pageHeading}</h1>";
+$pageTitle = IS_INDEX ? 'Welcome to ' : "助学金申请表在线生成";
+$pageHeading = IS_INDEX ? '' : "<h1>恭喜，生成完毕</h1>";
 
 // Populate samples
 $files = '';
@@ -61,12 +60,12 @@ function write($phpWord, $filename, $writers)
 
     // Write documents
     foreach ($writers as $format => $extension) {
-        $result .= date('H:i:s') . " Write to {$format} format";
+        $result .= date('H:i:s') . " 写入 {$format} 格式";
         if (null !== $extension) {
             $targetFile = __DIR__ . "/results/{$filename}.{$extension}";
             $phpWord->save($targetFile, $format);
         } else {
-            $result .= ' ... NOT DONE!';
+            $result .= ' ... 未完成!';
         }
         $result .= EOL;
     }
@@ -89,8 +88,8 @@ function getEndingNotes($writers)
 
     // Do not show execution time for index
     if (!IS_INDEX) {
-        $result .= date('H:i:s') . " Done writing file(s)" . EOL;
-        $result .= date('H:i:s') . " Peak memory usage: " . (memory_get_peak_usage(true) / 1024 / 1024) . " MB" . EOL;
+        $result .= date('H:i:s') . " 写入完毕 " . EOL;
+        $result .= date('H:i:s') . " 内存占用: " . (memory_get_peak_usage(true) / 1024 / 1024) . " MB" . EOL;
     }
 
     // Return
@@ -100,7 +99,7 @@ function getEndingNotes($writers)
         if (!IS_INDEX) {
             $types = array_values($writers);
             $result .= '<p>&nbsp;</p>';
-            $result .= '<p>Results: ';
+            $result .= '<p>结果: ';
             foreach ($types as $type) {
                 if (!is_null($type)) {
                     $resultFile = 'results/' . SCRIPT_FILENAME . '.' . $type;
@@ -126,30 +125,4 @@ function getEndingNotes($writers)
 </head>
 <body>
 <div class="container">
-<div class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="./">PHPWord</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-code fa-lg"></i>&nbsp;Samples<strong class="caret"></strong></a>
-                    <ul class="dropdown-menu"><?php echo $files; ?></ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="https://github.com/PHPOffice/PHPWord"><i class="fa fa-github fa-lg" title="GitHub"></i>&nbsp;</a></li>
-                <li><a href="http://phpword.readthedocs.org/"><i class="fa fa-book fa-lg" title="Docs"></i>&nbsp;</a></li>
-                <li><a href="http://twitter.com/PHPWord"><i class="fa fa-twitter fa-lg" title="Twitter"></i>&nbsp;</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
 <?php echo $pageHeading; ?>
